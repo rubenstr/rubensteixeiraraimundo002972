@@ -1,4 +1,4 @@
-<app-header></app-header>
+ <app-header></app-header>
 <div class="flex min-h-full flex-col justify-center mt-10 px-6 py-1 lg:px-18">
   
     <img src="assets/logo.png" alt="Your Company" class="mx-auto h-60 w-auto" />
@@ -6,11 +6,16 @@
 
 
   <div class="mt-1 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form action="#" method="POST" class="space-y-1">
+    <form action="#" [formGroup]="formLogin"   method="POST" class="space-y-1">
       <div>
         <label for="nome" class="block text-sm/6 font-medium text-gray-500">Nome:</label>
         <div class="mt-2">
-          <input id="nome" type="text" name="nome" required class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-gray-400 outline-1 -outline-offset-1 border-1 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+          <input id="nome" type="text" name="nome" formControlName="username" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-gray-400 outline-1 -outline-offset-1 border-1 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+          <div>
+            @if(formLogin.controls.username.hasError('required') && formLogin.controls.username.touched){
+              <small class="text-red-600">O nome é obrigatório.</small>
+            }
+          </div>
         </div>
       </div>
 
@@ -19,12 +24,17 @@
           <label for="password" class="block text-sm/6 font-medium text-gray-500">Senha:</label>
         </div>
         <div class="mt-2">
-          <input id="password" type="password" name="password" required autocomplete="current-password" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-400 border-1 border-color -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+          <input id="password" type="password" name="password" formControlName="password" autocomplete="current-password" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-400 border-1 border-color -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                    <div>
+            @if(formLogin.controls.password.hasError('required') && formLogin.controls.password.touched){
+              <small class="text-red-600">A senha é obrigatória.</small>
+            }
+          </div>
         </div>
       </div>
 
       <div>
-        <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" (click)="getAutentitacao()">Login</button>
+        <button type="submit" [disabled]="formLogin.invalid" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" (click)="getAutentitacao()">Login</button>
       </div>
     </form>
   </div>
