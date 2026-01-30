@@ -1,12 +1,26 @@
-<div>
-    <h2>Lista de Pets</h2>
-    <div  *ngFor="let pet of petsList">
-        <ul>
-                <li>
-                <strong>Nome:</strong> {{ pet }} <br>
-                <hr>
-                </li>
-            </ul>
-    </div>
-   
-</div>
+@if (petsList().length > 0) {
+
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+  @for (pet of petsList(); track pet.id) {
+    <article class="border rounded p-4 shadow">
+      <h3 class="text-lg font-bold">{{ pet.nome }}</h3>
+
+      <p>Raça: {{ pet.raca }}</p>
+      <p>Idade: {{ pet.idade }} anos</p>
+
+      @if (pet.foto) {
+        <img
+          [src]="pet.foto.url"
+          [alt]="pet.nome"
+          class="w-full h-40 object-cover mt-2"
+        />
+      }
+    </article>
+  }
+
+</section>
+
+} @else {
+  <p class="text-gray-500">Nenhum pet encontrado 🐾</p>
+}

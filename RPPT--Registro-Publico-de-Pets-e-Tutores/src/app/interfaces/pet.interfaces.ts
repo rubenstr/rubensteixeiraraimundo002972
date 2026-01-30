@@ -1,15 +1,22 @@
 export interface PetListInterface {
-  content: PetContent
+  content: PetContent[];
   page: number;
-  total: number;
   size: number;
+  total: number;
   pageCount: number;
 }
 
 export interface PetContent {
-    id: number;
-    nome: "string",
-    raca: "string",
-    idade: 0,
-    foto: {}, 
+  id: number;
+  nome: string;
+  raca: string;
+  idade: number;
+  foto: Foto;
+}
+
+export interface Foto {
+  id: number;
+  nome: string;
+  contentType: string;
+  url: string;
 }

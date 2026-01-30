@@ -1,33 +1,42 @@
-import { Component, ViewChild, AfterViewInit, Directive } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { PetContent, PetListInterface } from '../../interfaces/pet.interfaces';
 import { PetService } from '../../services/pet.service';
-import { PetListInterface } from '../../interfaces/pet.interfaces';
-import { CommonModule, JsonPipe } from '@angular/common';
-
 
 @Component({
   selector: 'app-pet',
-  imports: [JsonPipe, CommonModule],
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './pet.html',
-  styleUrl: './pet.css',
 })
+export class Pet implements OnInit {
 
-export class Pet implements AfterViewInit{
-  
-  constructor(private _petService: PetService) {}
- 
-  petsList: PetListInterface[] = [];
+  petsList = signal<PetContent[]>([]);
 
-   ngAfterViewInit() {
-    this._petService.getPets().subscribe((data: PetListInterface[])=> {
-      console.log("****Data: ", data.content);
-      this.petsList  = data;
-    }) ;
- 
+  page = signal(0);
+  size = signal(10);
+  total = signal(0);
+  pageCount = signal(0);
+
+  constructor(private petService: PetService) {}
+
+  ngOnInit(): void {
+    this.loadPets();
   }
 
+  loadPets(): void {
+    this.petService.getPets(this.page(), this.size()).subscribe({
+      next: (response: PetListInterface) => {
+        this.petsList.set(response.content);
+        this.total.set(response.total);
+        this.pageCount.set(response.pageCount);
+      },
+      error: (err) => {
+        console.error('Erro ao buscar pets', err);
+        this.petsList.set([]);
+      }
+    });
+  }
 
-
-
-
+  trackByPetId = (_: number, pet: PetContent) => pet.id;
 }
