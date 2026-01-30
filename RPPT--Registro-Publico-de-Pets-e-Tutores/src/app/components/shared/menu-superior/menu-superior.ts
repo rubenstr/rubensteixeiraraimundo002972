@@ -22,6 +22,7 @@ export class MenuSuperior {
   }
 
   onFilterInput(event: Event) {
+    console.log(event)
     const value = (event.target as HTMLInputElement).value;
     this.filterChange.emit(value);
   }

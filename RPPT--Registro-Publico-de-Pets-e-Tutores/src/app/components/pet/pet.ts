@@ -12,9 +12,10 @@ import { PetService } from '../../services/pet.service';
 export class Pet implements OnInit {
 
   petsList = signal<PetContent[]>([]);
+  filter = input<string>('');
 
-  page = signal(0);
-  size = signal(10);
+  page = signal(1);
+  size = signal(100);
   total = signal(0);
   pageCount = signal(0);
 
@@ -40,12 +41,19 @@ export class Pet implements OnInit {
 
   trackByPetId = (_: number, pet: PetContent) => pet.id;
 
-  filter = input<string>('');
 
-filteredPets = computed(() =>
-  this.petsList().filter(p =>
-    p.nome.toLowerCase().includes(this.filter().toLowerCase())
-  )
-);
+filteredPets = computed<PetContent[]>(() => {
+  const text = this.filter().toLowerCase();
+
+  if (!text) {
+    return this.petsList(); 
+  }
+
+  return this.petsList().filter(pet =>
+    pet.nome.toLowerCase().includes(text)
+  );
+});
+
+
 
 }
