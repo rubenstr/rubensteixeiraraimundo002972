@@ -1,0 +1,12 @@
+<app-menu-superior
+  [activeTab]="activeTab()"
+  (tabChange)="onTabChange($event)"
+  (filterChange)="onFilterChange($event)"
+/>
+<section class="p-4">
+  @if (activeTab() === 'pets') {
+    <app-pet [filter]="filterText()" />
+  } @else {
+    <app-tutor />
+  }
+</section>

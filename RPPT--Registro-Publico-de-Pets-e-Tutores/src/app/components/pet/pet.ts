@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PetContent, PetListInterface } from '../../interfaces/pet.interfaces';
 import { PetService } from '../../services/pet.service';
@@ -39,4 +39,13 @@ export class Pet implements OnInit {
   }
 
   trackByPetId = (_: number, pet: PetContent) => pet.id;
+
+  filter = input<string>('');
+
+filteredPets = computed(() =>
+  this.petsList().filter(p =>
+    p.nome.toLowerCase().includes(this.filter().toLowerCase())
+  )
+);
+
 }

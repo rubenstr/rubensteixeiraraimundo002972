@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Header } from '../shared/header/header';
 import { Autenticacao } from '../../services/autenticacao.service';
 import { Credentials } from '../../interfaces/credentials.interfaces';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,7 +7,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ Header, FormsModule, ReactiveFormsModule],
+  imports: [ FormsModule, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
