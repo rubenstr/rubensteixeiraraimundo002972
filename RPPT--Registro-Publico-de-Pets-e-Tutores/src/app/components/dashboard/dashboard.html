@@ -4,9 +4,5 @@
   (filterChange)="onFilterChange($event)"
 />
 <section class="p-4">
-  @if (activeTab() === 'pets') {
-    <app-pet [filter]="filterText()" />
-  } @else {
-    <app-tutor />
-  }
+  <router-outlet />
 </section>
