@@ -1,1 +1,12 @@
-<p>pet works!</p>
+<div>
+    <h2>Lista de Pets</h2>
+    <div  *ngFor="let pet of petsList">
+        <ul>
+                <li>
+                <strong>Nome:</strong> {{ pet }} <br>
+                <hr>
+                </li>
+            </ul>
+    </div>
+   
+</div>
