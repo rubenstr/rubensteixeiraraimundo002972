@@ -6,26 +6,36 @@ export const APP_ROUTES: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
+
   {
     path: 'login',
     loadComponent: () =>
-      import('./components/login/login').then(l => l.Login)
+      import('./components/login/login')
+        .then(m => m.Login)
   },
+
   {
-    path: '',
+    path: 'dashboard',
     loadComponent: () =>
-      import('./components/dashboard/dashboard').then(d => d.Dashboard),
+      import('./components/dashboard/dashboard')
+        .then(m => m.Dashboard),
     children: [
+      {
+        path: '',
+        redirectTo: 'pets',
+        pathMatch: 'full'
+      },
       {
         path: 'pets',
         loadComponent: () =>
-          import('./components/pet/pet').then(p => p.Pet)
-      },
-      {
-        path: 'tutors',
-        loadComponent: () =>
-          import('./components/tutor/tutor').then(t => t.Tutor)
+          import('./components/pet/pet')
+            .then(m => m.Pet)
       }
     ]
+  },
+
+  {
+    path: '**',
+    redirectTo: 'login'
   }
 ];

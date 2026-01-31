@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Autenticacao } from '../../services/autenticacao.service';
+
 import { Credentials } from '../../interfaces/credentials.interfaces';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import { AutenticacaoService } from '../../core/services/autenticacao.service';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +14,15 @@ import { RouterLink } from '@angular/router';
 })
 export class Login {
 
-  credential: Credentials = {
+  credentials: Credentials = {
     "username":  '',
     "password": ''
   }
 
-  constructor(private readonly aut: Autenticacao) {}
+  constructor(
+    private readonly auth: AutenticacaoService,
+    private readonly router: Router
+  ) {}
 
 
     formLogin = new FormGroup({
@@ -26,15 +30,21 @@ export class Login {
       password: new FormControl('', { validators: [Validators.required] }),
     });
 
-    public getAutentitacao(){
-      if(this.formLogin.invalid) {return;}
-      this.credential.username = this.formLogin.controls.username.value || '';
-      this.credential.password = this.formLogin.controls.password.value || '';
-      console.log(this.credential);
-    this.aut.login(this.credential).subscribe({
-      next: (response) => {this.resetForm(), console.log('Post created successfully:', response)
+      public getAutenticacao() {
+    if (this.formLogin.invalid) return;
+
+    const credential = {
+      username: this.formLogin.value.username!,
+      password: this.formLogin.value.password!
+    };
+
+    this.auth.login(credential).subscribe({
+      next: () => {
+        this.router.navigate(['/dashboard']);
       },
-      error: (error) => console.error('Error creating post:', error)
+      error: (err: any) => {
+        console.error('Erro no login', err);
+      }
     });
   }
 

@@ -12,4 +12,5 @@ import { Dashboard } from './components/dashboard/dashboard';
 })
 export class App {
   protected readonly title = signal('RPPT--Registro-Publico-de-Pets-e-Tutores');
+
 }
