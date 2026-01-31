@@ -10,10 +10,8 @@ import { Component, input, output } from '@angular/core';
 })
 export class MenuSuperior {
 
-  // Aba ativa (controlada pelo Dashboard)
   activeTab = input<'pets' | 'tutores'>('pets');
 
-  // Eventos
   tabChange = output<'pets' | 'tutores'>();
   filterChange = output<string>();
 

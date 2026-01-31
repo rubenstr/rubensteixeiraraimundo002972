@@ -2,6 +2,7 @@ import { Component, computed, input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PetContent, PetListInterface } from '../../interfaces/pet.interfaces';
 import { PetService } from '../../services/pet.service';
+import { dashboardFilter } from '../dashboard/dashboard-state';
 
 @Component({
   selector: 'app-pet',
@@ -12,7 +13,6 @@ import { PetService } from '../../services/pet.service';
 export class Pet implements OnInit {
 
   petsList = signal<PetContent[]>([]);
-  filter = input<string>('');
 
   page = signal(0);
   size = signal(100);
@@ -43,7 +43,7 @@ export class Pet implements OnInit {
 
 
 filteredPets = computed<PetContent[]>(() => {
-  const text = this.filter().toLowerCase();
+  const text = dashboardFilter().toLowerCase();
 
   if (!text) {
     return this.petsList(); 

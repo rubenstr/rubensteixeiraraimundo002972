@@ -4,6 +4,7 @@ import { MenuSuperior } from '../shared/menu-superior/menu-superior';
 import { Pet } from '../pet/pet';
 import { Tutor } from '../tutor/tutor';
 import { Router, RouterOutlet } from '@angular/router';
+import { dashboardFilter } from './dashboard-state';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,7 +32,7 @@ onTabChange(tab: 'pets' | 'tutores') {
 
   onFilterChange(value: string) {
     console.log('Filter changed to:', value);
-    this.filterText.set(value);
+    dashboardFilter.set(value);
   }
 
 }
