@@ -6,9 +6,17 @@
 
   @for (pet of filteredPets(); track pet.id) {
     <article
-      class="bg-white border border-gray-200 rounded-lg
-             shadow-sm hover:shadow-md transition-shadow
-             p-4 flex flex-col gap-2">
+  class="
+    bg-white border rounded-lg
+    shadow-sm transition
+    p-4 flex flex-col gap-2
+    cursor-pointer
+  "
+  [class.border-gray-200]="selectedPetId() !== pet.id"
+  [class.border-indigo-500]="selectedPetId() === pet.id"
+  [class.bg-indigo-50]="selectedPetId() === pet.id"
+  [class.shadow-md]="selectedPetId() === pet.id"
+  (click)="openPetDetail(pet.id)">
 
       @if (pet.foto) {
         <img
@@ -39,6 +47,12 @@
 } @else {
   <p class="text-gray-500 p-4">Nenhum pet encontrado 🐾</p>
 }
+
+<app-pet-detail-modal
+  [pet]="petDetail()"
+  [loading]="loadingDetail()"
+  (close)="closePetDetail()"
+/>
 
 <app-pagination
   [page]="page()"

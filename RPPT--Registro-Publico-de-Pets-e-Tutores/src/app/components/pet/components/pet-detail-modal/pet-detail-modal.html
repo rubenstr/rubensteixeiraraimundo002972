@@ -1,0 +1,122 @@
+@if (pet() || loading()) {
+
+  <div class="fixed inset-0 z-50 flex items-center justify-center">
+
+    <!-- Backdrop -->
+    <div
+      class="absolute inset-0 bg-black/40"
+      (click)="close.emit()"
+    ></div>
+
+    <!-- Modal -->
+    <div
+      class="
+        relative bg-white rounded-xl shadow-xl
+        w-full max-w-2xl mx-4
+        p-6 z-10
+      "
+    >
+
+      <!-- Header -->
+      <h2
+        class="
+          text-xl font-bold text-gray-900
+          text-center mb-6
+        "
+      >
+        {{ pet()?.nome || 'Detalhes do Pet' }}
+      </h2>
+
+      <!-- Content -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Dados -->
+        <div class="space-y-3 text-sm text-gray-700">
+
+          @if (loading()) {
+            <div class="animate-pulse space-y-3">
+              <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+              <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+            </div>
+          }
+
+          @if (!loading() && pet()) {
+            <p><strong>Espécie:</strong> {{ pet()?.especie }}</p>
+            <p><strong>Raça:</strong> {{ pet()?.raca }}</p>
+            <p><strong>Idade:</strong> {{ pet()?.idade }} anos</p>
+            <p><strong>Sexo:</strong> {{ pet()?.sexo }}</p>
+          }
+        </div>
+
+        <!-- Foto -->
+        <div class="flex items-center justify-center">
+          @if (pet()?.foto) {
+            <img
+              [src]="pet()?.foto?.url"
+              [alt]="pet()?.nome"
+              class="
+                w-40 h-40
+                object-cover rounded-lg
+                border border-gray-200
+              "
+            />
+          } @else {
+            <div
+              class="
+                w-40 h-40 rounded-lg
+                bg-gray-100
+                flex items-center justify-center
+                text-gray-400 text-sm
+              "
+            >
+              Sem foto
+            </div>
+          }
+        </div>
+
+      </div>
+
+      <!-- Tutores -->
+      @if (!loading() && pet()?.tutores?.length) {
+        <div class="mt-6">
+          <h3 class="text-sm font-semibold text-gray-800 mb-2">
+            Tutores
+          </h3>
+
+          <ul class="space-y-1 text-sm text-gray-700">
+            @for (tutor of pet()?.tutores; track tutor.id) {
+              <li
+                class="
+                  flex items-center gap-2
+                  px-3 py-2
+                  bg-gray-50 rounded-md
+                "
+              >
+                <span class="w-2 h-2 bg-indigo-500 rounded-full"></span>
+                {{ tutor.nome }}
+              </li>
+            }
+          </ul>
+        </div>
+      }
+
+      <!-- Footer -->
+      <div class="mt-8 text-center">
+        <button
+          type="button"
+          class="
+            px-5 py-2 rounded-md
+            bg-indigo-600 text-white text-sm
+            hover:bg-indigo-700
+            transition
+          "
+          (click)="close.emit()"
+        >
+          Fechar
+        </button>
+      </div>
+
+    </div>
+  </div>
+}

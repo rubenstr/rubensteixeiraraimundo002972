@@ -4,11 +4,12 @@ import { PetContent, PetListInterface } from '../../interfaces/pet.interfaces';
 import { PetService } from '../../services/pet.service';
 import { dashboardFilter } from '../dashboard/dashboard-state';
 import { Pagination } from '../shared/pagination/pagination';
+import { PetDetailModal } from './components/pet-detail-modal/pet-detail-modal';
 
 @Component({
   selector: 'app-pet',
   standalone: true,
-  imports: [CommonModule, Pagination],
+  imports: [CommonModule, Pagination, PetDetailModal],
   templateUrl: './pet.html',
 })
 export class Pet implements OnInit {
@@ -19,6 +20,10 @@ export class Pet implements OnInit {
   size = signal(10);
   total = signal(0);
   pageCount = signal(0);
+
+ selectedPetId = signal<number | null>(null);
+ petDetail = signal<PetContent | null>(null);
+ loadingDetail = signal(false);
 
   constructor(private readonly _petService: PetService) {}
 
@@ -64,6 +69,27 @@ filteredPets = computed<PetContent[]>(() => {
   this.size.set(newSize);
   this.page.set(0);     
   this.loadPets();
+}
+
+openPetDetail(id: number) {
+  this.selectedPetId.set(id);
+  this.loadingDetail.set(true);
+
+  this._petService.getPetById(id).subscribe({
+    next: pet => {
+      this.petDetail.set(pet);
+      this.loadingDetail.set(false);
+    },
+    error: () => {
+      this.petDetail.set(null);
+      this.loadingDetail.set(false);
+    }
+  });
+}
+
+closePetDetail() {
+  this.selectedPetId.set(null);
+  this.petDetail.set(null);
 }
 
 
