@@ -14,25 +14,25 @@ export class Pet implements OnInit {
   petsList = signal<PetContent[]>([]);
   filter = input<string>('');
 
-  page = signal(1);
+  page = signal(0);
   size = signal(100);
   total = signal(0);
   pageCount = signal(0);
 
-  constructor(private petService: PetService) {}
+  constructor(private readonly _petService: PetService) {}
 
   ngOnInit(): void {
     this.loadPets();
   }
 
   loadPets(): void {
-    this.petService.getPets(this.page(), this.size()).subscribe({
+    this._petService.getPets(this.page(), this.size()).subscribe({
       next: (response: PetListInterface) => {
         this.petsList.set(response.content);
         this.total.set(response.total);
         this.pageCount.set(response.pageCount);
       },
-      error: (err) => {
+      error: (err:any) => {
         console.error('Erro ao buscar pets', err);
         this.petsList.set([]);
       }
