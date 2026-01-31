@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { PetContent, PetListInterface } from '../../interfaces/pet.interfaces';
 import { PetService } from '../../services/pet.service';
 import { dashboardFilter } from '../dashboard/dashboard-state';
+import { Pagination } from '../shared/pagination/pagination';
 
 @Component({
   selector: 'app-pet',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Pagination],
   templateUrl: './pet.html',
 })
 export class Pet implements OnInit {
@@ -15,7 +16,7 @@ export class Pet implements OnInit {
   petsList = signal<PetContent[]>([]);
 
   page = signal(0);
-  size = signal(100);
+  size = signal(10);
   total = signal(0);
   pageCount = signal(0);
 
@@ -53,6 +54,17 @@ filteredPets = computed<PetContent[]>(() => {
     pet.nome.toLowerCase().includes(text)
   );
 });
+
+  onPageChange(newpage: number) {
+    this.page.set(newpage);
+    this.loadPets();
+  }
+
+  onSizeChange(newSize: number) {
+  this.size.set(newSize);
+  this.page.set(0);     
+  this.loadPets();
+}
 
 
 

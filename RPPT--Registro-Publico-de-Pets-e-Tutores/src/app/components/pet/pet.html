@@ -39,3 +39,11 @@
 } @else {
   <p class="text-gray-500 p-4">Nenhum pet encontrado 🐾</p>
 }
+
+<app-pagination
+  [page]="page()"
+  [pageCount]="pageCount()"
+  (pageChange)="onPageChange($event)"
+  (sizeChange)="onSizeChange($event)"
+
+/>
