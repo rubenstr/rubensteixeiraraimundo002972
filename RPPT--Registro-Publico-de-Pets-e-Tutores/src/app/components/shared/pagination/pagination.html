@@ -1,0 +1,75 @@
+<div
+  class="
+    flex flex-col gap-4 mt-8
+    sm:flex-row sm:items-center sm:justify-between
+  "
+>
+
+  <!-- Itens por página -->
+  <div class="flex items-center gap-2 text-sm text-gray-600">
+    <span>Itens por página:</span>
+
+    <select
+      class="
+        border border-gray-300 rounded-md
+        px-3 py-1.5
+        bg-white
+        focus:outline-none
+        focus:ring-2 focus:ring-indigo-500
+      "
+      [value]="size()"
+      (change)="sizeChange.emit(+$any($event.target).value)"
+    >
+      <option value="10">10</option>
+      <option value="1">1</option>
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+    </select>
+  </div>
+
+  <!-- Controles de paginação -->
+  <div class="flex items-center justify-center gap-4">
+
+    <button
+      type="button"
+      class="
+        px-4 py-2 rounded-lg
+        text-sm font-medium
+        bg-gray-100 text-gray-700
+        hover:bg-gray-200
+        disabled:opacity-40
+        disabled:cursor-not-allowed
+        transition
+      "
+      [disabled]="page() === 0"
+      (click)="pageChange.emit(page() - 1)"
+    >
+      ← Anterior
+    </button>
+
+    <span class="text-sm text-gray-600">
+      Página
+      <strong class="text-gray-900">{{ page() + 1 }}</strong>
+      de
+      <strong class="text-gray-900">{{ pageCount() }}</strong>
+    </span>
+
+    <button
+      type="button"
+      class="
+        px-4 py-2 rounded-lg
+        text-sm font-medium
+        bg-gray-100 text-gray-700
+        hover:bg-gray-200
+        disabled:opacity-40
+        disabled:cursor-not-allowed
+        transition
+      "
+      (click)="pageChange.emit(page() + 1)"
+    >
+      Próxima →
+    </button>
+
+  </div>
+</div>
