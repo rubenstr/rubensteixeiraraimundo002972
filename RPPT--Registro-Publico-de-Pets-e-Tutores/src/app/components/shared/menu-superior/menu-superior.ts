@@ -11,7 +11,7 @@ import { Component, input, output } from '@angular/core';
 export class MenuSuperior {
 
   activeTab = input<'pets' | 'tutores'>('pets');
-
+  createPet = output<void>();
   tabChange = output<'pets' | 'tutores'>();
   filterChange = output<string>();
 
@@ -24,4 +24,10 @@ export class MenuSuperior {
     const value = (event.target as HTMLInputElement).value;
     this.filterChange.emit(value);
   }
+
+  onCreatePet() {
+    console.log('Create Pet button clicked');
+    this.createPet.emit();
+  }
+
 }

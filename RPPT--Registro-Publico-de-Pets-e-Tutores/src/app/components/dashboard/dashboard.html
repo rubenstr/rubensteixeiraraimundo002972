@@ -2,8 +2,17 @@
   [activeTab]="activeTab()"
   (tabChange)="onTabChange($event)"
   (filterChange)="onFilterChange($event)"
+  (createPet)="openCreatePet()"
 />
 <section class="p-4">
   <router-outlet
 ></router-outlet>
 </section>
+
+@if (showPetForm()) {
+  <app-pet-form-modal
+    [pet]="selectedPet()"
+    [mode]="formMode()"
+    (close)="closeForm()"
+  />
+}

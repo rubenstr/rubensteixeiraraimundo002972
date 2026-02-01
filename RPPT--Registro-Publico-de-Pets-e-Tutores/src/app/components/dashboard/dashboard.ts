@@ -1,20 +1,19 @@
 import { Component , signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuSuperior } from '../shared/menu-superior/menu-superior';
-import { Pet } from '../pet/pet';
-import { Tutor } from '../tutor/tutor';
 import { Router, RouterOutlet } from '@angular/router';
 import { dashboardFilter } from './dashboard-state';
+import { PetFormModal } from '../pet/components/pet-form-modal/pet-form-modal';
+import { Pet } from '../pet/pet';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [    
+  imports: [
+    PetFormModal,    
     CommonModule,
     MenuSuperior,
-    RouterOutlet,
-    Pet,
-    Tutor],
+    RouterOutlet],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
@@ -22,6 +21,9 @@ export class Dashboard {
  constructor(private readonly router: Router) {}
   activeTab = signal<'pets' | 'tutores'>('pets');
   filterText = signal('');
+  selectedPet = signal<Pet | null>(null);
+  formMode = signal<'create' | 'edit'>('create');
+  showPetForm = signal(false);
 
 onTabChange(tab: 'pets' | 'tutores') {
   this.activeTab.set(tab);
@@ -34,5 +36,15 @@ onTabChange(tab: 'pets' | 'tutores') {
     console.log('Filter changed to:', value);
     dashboardFilter.set(value);
   }
+
+  openCreatePet() {
+  this.selectedPet.set(null);
+  this.formMode.set('create');
+  this.showPetForm.set(true);
+}
+
+closeForm() {
+  this.showPetForm.set(false);
+}
 
 }

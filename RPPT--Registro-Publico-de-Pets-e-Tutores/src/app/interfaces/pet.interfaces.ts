@@ -20,3 +20,10 @@ export interface Foto {
   contentType: string;
   url: string;
 }
+
+export interface Pet {
+  id?: number;
+  nome: string;
+  raca: string;
+  idade: number;
+}
