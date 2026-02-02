@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { PetContent, PetListInterface, Pet} from '../interfaces/pet.interfaces';
+import { IPetContent, IPetListInterface, IPet} from '../interfaces/pet.interfaces';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
@@ -16,8 +16,8 @@ export class PetService {
   constructor(private readonly _http: HttpClient) {} 
 
 
-getPets(page: number, size: number): Observable<PetListInterface> {
-  return this._http.get<PetListInterface>(
+getPets(page: number, size: number): Observable<IPetListInterface> {
+  return this._http.get<IPetListInterface>(
     `${environment.NG_APP_API_URL}v1/pets`,
     {
       params: {
@@ -28,14 +28,14 @@ getPets(page: number, size: number): Observable<PetListInterface> {
   );
 }
 
-getPetById(id: number): Observable<PetContent> {
-  return this._http.get<PetContent>(
+getPetById(id: number): Observable<IPetContent> {
+  return this._http.get<IPetContent>(
     `${environment.NG_APP_API_URL}v1/pets/${id}`
   );
 }
 
 create(payload: any) {
-  return this._http.post<Pet>(`${environment.NG_APP_API_URL}/v1/pets`, payload);
+  return this._http.post<IPet>(`${environment.NG_APP_API_URL}v1/pets`, payload);
 }
 
 update(id: number, payload: any) {
@@ -44,8 +44,22 @@ update(id: number, payload: any) {
 
 uploadPhoto(id: number, file: File) {
   const formData = new FormData();
-  formData.append('file', file);
+  formData.append('foto', file);
   return this._http.post(`${environment.NG_APP_API_URL}v1/pets/${id}/fotos`, formData);
+}
+
+updatePet(
+  id: number,
+  payload: Partial<{
+    nome: string;
+    raca: string;
+    idade: number;
+  }>
+) {
+  return this._http.put<IPet>(
+    `${this.baseURI}pets/${id}`,
+    payload
+  );
 }
 
 }

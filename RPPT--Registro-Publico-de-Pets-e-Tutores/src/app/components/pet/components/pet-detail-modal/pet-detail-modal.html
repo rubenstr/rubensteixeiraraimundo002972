@@ -2,126 +2,199 @@
 
 <div class="fixed inset-0 z-50 flex items-center justify-center">
 
-  <div class="absolute inset-0 bg-black/40" (click)="close.emit()"></div>
+  <div
+    class="absolute inset-0 bg-black/40"
+    (click)="close.emit()">
+  </div>
 
-  <div class="
-        relative bg-white rounded-xl shadow-xl
-        w-full max-w-2xl mx-4
-        p-6 z-10
-      ">
+  <div
+    class="relative bg-white rounded-xl shadow-xl
+           w-full max-w-2xl mx-4 p-6 z-10">
 
-    <h2 class="
-          text-xl font-bold text-gray-900
-          text-center mb-6
-        ">
-      {{ pet()?.nome || 'Detalhes do Pet' }}
-    </h2>
+    <!-- HEADER -->
+    <div class="flex items-center justify-between mb-6">
 
+      <h2 class="text-xl font-bold text-gray-900">
+        @if (isEditing()) {
+          {{ pet()?.nome || 'Detalhes do Pet' }}
+        } @else {
+          Editar Pet
+        }
+      </h2>
+
+      <button
+        type="button"
+        class="text-sm text-indigo-600 hover:underline"
+        (click)="toggleEdit()">
+        {{ isEditing() ? 'Cancelar' : 'Editar' }}
+      </button>
+
+    </div>
+
+    <!-- CONTENT -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
+      <!-- LEFT -->
       <div class="space-y-3 text-sm text-gray-700">
 
         @if (loading()) {
-        <div class="animate-pulse space-y-3">
-          <div class="h-4 bg-gray-200 rounded w-3/4"></div>
-          <div class="h-4 bg-gray-200 rounded w-2/3"></div>
-          <div class="h-4 bg-gray-200 rounded w-1/2"></div>
-        </div>
+          <div class="animate-pulse space-y-3">
+            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+            <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+            <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+          </div>
         }
 
         @if (!loading() && pet()) {
-        <p><strong>Espécie:</strong> {{ pet()?.especie }}</p>
-        <p><strong>Raça:</strong> {{ pet()?.raca }}</p>
-        <p><strong>Idade:</strong> {{ pet()?.idade }} anos</p>
-        <p><strong>Sexo:</strong> {{ pet()?.sexo }}</p>
-        }
-      </div>
 
-      <div class="flex items-center justify-center">
-        @if (pet()?.foto) {
-        <img [src]="pet()?.foto?.url" [alt]="pet()?.nome" class="
-                w-40 h-40
-                object-cover rounded-lg
-                border border-gray-200
-              " />
-        } @else {
-        <div class="
-                w-40 h-40 rounded-lg
-                bg-gray-100
-                flex items-center justify-center
-                text-gray-400 text-sm
-              ">
-          Sem foto
-        </div>
-        }
-      </div>
+          <form
+            [formGroup]="form"
+            class="space-y-3">
 
-    </div>
-
-    @if (!loading() && pet()?.tutores?.length) {
-
-    <div class="mt-6">
-      <h3 class="text-sm font-semibold text-gray-800 mb-3">
-        Tutores
-      </h3>
-
-      <ul class="space-y-2">
-
-        @for (tutor of pet()?.tutores; track tutor.id) {
-        <li class="
-            border border-gray-200 rounded-lg
-            overflow-hidden
-          ">
-
-          <!-- Header -->
-          <button type="button" class="
-              w-full flex items-center justify-between
-              px-4 py-3
-              bg-gray-50 hover:bg-gray-100
-              text-sm font-medium text-gray-800
-              transition
-            " (click)="toggleTutor(tutor.id)">
-            <span>{{ tutor.nome }}</span>
-
-            <span class="transition-transform" [class.rotate-180]="expandedTutorId() === tutor.id">
-              ▼
-            </span>
-          </button>
-
-          <!-- Body -->
-          @if (expandedTutorId() === tutor.id) {
-          <div class="px-4 py-3 bg-white text-sm text-gray-700">
-
-            @if (loadingTutor()) {
-            <div class="animate-pulse space-y-2">
-              <div class="h-4 bg-gray-200 rounded w-3/4"></div>
-              <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+            <!-- NOME -->
+            <div>
+              <label class="text-sm font-medium">Nome</label>
+              <input
+                type="text"
+                formControlName="nome"
+                [class.bg-gray-100]="!isEditing()"
+                class="w-full mt-1 px-3 py-2 border rounded-md" />
             </div>
-            }
 
-            @if (!loadingTutor() && tutorDetail()) {
-            <p><strong>Email:</strong> {{ tutorDetail()?.email }}</p>
-            <p><strong>Telefone:</strong> {{ tutorDetail()?.telefone }}</p>
-            }
+            <!-- RAÇA -->
+            <div>
+              <label class="text-sm font-medium">Raça</label>
+              <input
+                type="text"
+                formControlName="raca"
+                [class.bg-gray-100]="!isEditing()"
+                class="w-full mt-1 px-3 py-2 border rounded-md" />
+            </div>
 
-          </div>
+            <!-- IDADE -->
+            <div>
+              <label class="text-sm font-medium">Idade</label>
+              <input
+                type="number"
+                formControlName="idade"
+                [class.bg-gray-100]="!isEditing()"
+                class="w-full mt-1 px-3 py-2 border rounded-md" />
+            </div>
+
+          </form>
+        }
+      </div>
+
+      <!-- RIGHT (FOTO) -->
+      <div class="flex items-center justify-center">
+        <label class="relative cursor-pointer group">
+
+          <img
+            [src]="photoPreview() || pet()?.foto?.url || 'assets/sem-foto.png'"
+            [alt]="pet()?.nome"
+            class="w-40 h-40 object-cover rounded-lg border border-gray-200" />
+
+          @if (isEditing()) {
+            <div
+              class="absolute inset-0 bg-black/40 text-white
+                     flex items-center justify-center text-sm
+                     opacity-0 group-hover:opacity-100
+                     transition rounded-lg">
+              Alterar foto
+            </div>
           }
 
-        </li>
-        }
+          <input
+            type="file"
+            accept="image/*"
+            class="hidden"
+            [disabled]="!isEditing()"
+            (change)="onPhotoSelected($event)" />
 
-      </ul>
+        </label>
+      </div>
+
     </div>
+
+    <!-- TUTORES -->
+    @if (!loading() && pet()?.tutores?.length) {
+
+      <div class="mt-6">
+        <h3 class="text-sm font-semibold text-gray-800 mb-3">
+          Tutores
+        </h3>
+
+        <ul class="space-y-2">
+
+          @for (tutor of pet()?.tutores; track tutor.id) {
+
+            <li class="border border-gray-200 rounded-lg overflow-hidden">
+
+              <button
+                type="button"
+                class="w-full flex items-center justify-between
+                       px-4 py-3 bg-gray-50 hover:bg-gray-100
+                       text-sm font-medium text-gray-800"
+                (click)="toggleTutor(tutor.id)">
+
+                <span>{{ tutor.nome }}</span>
+
+                <span
+                  class="transition-transform"
+                  [class.rotate-180]="expandedTutorId() === tutor.id">
+                  ▼
+                </span>
+
+              </button>
+
+              @if (expandedTutorId() === tutor.id) {
+                <div class="px-4 py-3 bg-white text-sm text-gray-700">
+
+                  @if (loadingTutor()) {
+                    <div class="animate-pulse space-y-2">
+                      <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                      <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+                    </div>
+                  }
+
+                  @if (!loadingTutor() && tutorDetail()) {
+                    <p><strong>Email:</strong> {{ tutorDetail()?.email }}</p>
+                    <p><strong>Telefone:</strong> {{ tutorDetail()?.telefone }}</p>
+                  }
+
+                </div>
+              }
+
+            </li>
+          }
+
+        </ul>
+      </div>
     }
-    <div class="mt-8 text-center">
-      <button type="button" class="
-            px-5 py-2 rounded-md
-            bg-indigo-600 text-white text-sm
-            hover:bg-indigo-700
-            transition
-          " (click)="close.emit()">
+
+    <!-- FOOTER -->
+    <div class="mt-8 flex justify-end gap-3">
+
+      <button
+        type="button"
+        class="px-5 py-2 rounded-md border text-sm"
+        (click)="close.emit()">
         Fechar
       </button>
+
+      @if (isEditing()) {
+        <button
+          type="button"
+          class="px-5 py-2 rounded-md
+                 bg-indigo-600 text-white text-sm
+                 hover:bg-indigo-700
+                 disabled:opacity-50"
+          [disabled]="form.invalid || loading()"
+          (click)="savePet()">
+          {{ loading() ? 'Salvando...' : 'Salvar' }}
+        </button>
+      }
+
     </div>
 
   </div>

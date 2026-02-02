@@ -1,7 +1,7 @@
 import { Component, computed, inject, Input, OnInit, output, signal } from '@angular/core';
 import { PetService } from '../../../../services/pet.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Pet } from '../../../../interfaces/pet.interfaces';
+import { IPet } from '../../../../interfaces/pet.interfaces';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -73,7 +73,7 @@ export class PetFormModal implements OnInit {
 
   private createPet(payload: any) {
     this.petService.create(payload).subscribe({
-      next: (pet: Pet) => this.uploadPhotoIfNeeded(pet.id ?? 0),
+      next: (pet: IPet) => this.uploadPhotoIfNeeded(pet.id ?? 0),
       error: () => this.loading.set(false)
     });
   }

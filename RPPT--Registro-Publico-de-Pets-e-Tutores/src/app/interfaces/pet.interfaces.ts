@@ -1,27 +1,27 @@
-export interface PetListInterface {
-  content: PetContent[];
+export interface IPetListInterface {
+  content: IPetContent[];
   page: number;
   size: number;
   total: number;
   pageCount: number;
 }
 
-export interface PetContent {
+export interface IPetContent {
   id: number;
   nome: string;
   raca: string;
   idade: number;
-  foto: Foto;
+  foto:  IFoto;
 }
 
-export interface Foto {
+export interface IFoto {
   id: number;
   nome: string;
   contentType: string;
   url: string;
 }
 
-export interface Pet {
+export interface IPet {
   id?: number;
   nome: string;
   raca: string;

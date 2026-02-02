@@ -9,10 +9,23 @@
 ></router-outlet>
 </section>
 
+@if (showPetDetail() && selectedPet()) {
+  <app-pet-detail-modal
+    [pet]="selectedPet()"
+    [loading]="loading()"
+    (save)="updatePet($event)"
+    (close)="closeDetail()"
+  />
+}
+
+
 @if (showPetForm()) {
   <app-pet-form-modal
     [pet]="selectedPet()"
     [mode]="formMode()"
     (close)="closeForm()"
   />
+
+
+
 }

@@ -48,11 +48,13 @@
   <p class="text-gray-500 p-4">Nenhum pet encontrado 🐾</p>
 }
 
-<app-pet-detail-modal
-  [pet]="petDetail()"
-  [loading]="loadingDetail()"
-  (close)="closePetDetail()"
-/>
+@if (petDetail()) {
+  <app-pet-detail-modal
+    [pet]="petDetail()"
+    [loading]="loadingDetail()"
+    (close)="closePetDetail()"
+  />
+}
 
 <app-pagination
   [page]="page()"

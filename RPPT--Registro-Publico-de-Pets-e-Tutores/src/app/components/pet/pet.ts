@@ -1,6 +1,6 @@
 import { Component, computed, input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PetContent, PetListInterface } from '../../interfaces/pet.interfaces';
+import { IPet, IPetContent, IPetListInterface } from '../../interfaces/pet.interfaces';
 import { PetService } from '../../services/pet.service';
 import { dashboardFilter } from '../dashboard/dashboard-state';
 import { Pagination } from '../shared/pagination/pagination';
@@ -14,7 +14,7 @@ import { PetDetailModal } from './components/pet-detail-modal/pet-detail-modal';
 })
 export class Pet implements OnInit {
 
-  petsList = signal<PetContent[]>([]);
+  petsList = signal<IPetContent[]>([]);
 
   page = signal(0);
   size = signal(10);
@@ -22,7 +22,7 @@ export class Pet implements OnInit {
   pageCount = signal(0);
 
  selectedPetId = signal<number | null>(null);
- petDetail = signal<PetContent | null>(null);
+ petDetail = signal<IPet | null>(null);
  loadingDetail = signal(false);
 
   constructor(private readonly _petService: PetService) {}
@@ -33,7 +33,7 @@ export class Pet implements OnInit {
 
   loadPets(): void {
     this._petService.getPets(this.page(), this.size()).subscribe({
-      next: (response: PetListInterface) => {
+      next: (response: IPetListInterface) => {
         this.petsList.set(response.content);
         this.total.set(response.total);
         this.pageCount.set(response.pageCount);
@@ -45,10 +45,10 @@ export class Pet implements OnInit {
     });
   }
 
-  trackByPetId = (_: number, pet: PetContent) => pet.id;
+  trackByPetId = (_: number, pet: IPetContent) => pet.id;
 
 
-filteredPets = computed<PetContent[]>(() => {
+filteredPets = computed<IPetContent[]>(() => {
   const text = dashboardFilter().toLowerCase();
 
   if (!text) {
@@ -71,21 +71,36 @@ filteredPets = computed<PetContent[]>(() => {
   this.loadPets();
 }
 
-openPetDetail(id: number) {
-  this.selectedPetId.set(id);
+openPetDetail(petId: number) {
+  this.selectedPetId.set(petId);
   this.loadingDetail.set(true);
 
-  this._petService.getPetById(id).subscribe({
+  this._petService.getPetById(petId).subscribe({
     next: pet => {
       this.petDetail.set(pet);
       this.loadingDetail.set(false);
     },
     error: () => {
-      this.petDetail.set(null);
       this.loadingDetail.set(false);
     }
   });
 }
+
+// openPetDetail(id: number) {
+//   this.selectedPetId.set(id);
+//   this.loadingDetail.set(true);
+
+//   this._petService.getPetById(id).subscribe({
+//     next: pet => {
+//       this.petDetail.set(pet);
+//       this.loadingDetail.set(false);
+//     },
+//     error: () => {
+//       this.petDetail.set(null);
+//       this.loadingDetail.set(false);
+//     }
+//   });
+// }
 
 closePetDetail() {
   this.selectedPetId.set(null);
