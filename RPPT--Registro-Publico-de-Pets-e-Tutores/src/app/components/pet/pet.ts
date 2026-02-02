@@ -5,6 +5,7 @@ import { PetService } from '../../services/pet.service';
 import { dashboardFilter } from '../dashboard/dashboard-state';
 import { Pagination } from '../shared/pagination/pagination';
 import { PetDetailModal } from './components/pet-detail-modal/pet-detail-modal';
+import { UpdatePetDTO } from '../../interfaces/update-pet.dto';
 
 @Component({
   selector: 'app-pet',
@@ -39,7 +40,6 @@ export class Pet implements OnInit {
         this.pageCount.set(response.pageCount);
       },
       error: (err:any) => {
-        console.error('Erro ao buscar pets', err);
         this.petsList.set([]);
       }
     });
@@ -86,21 +86,23 @@ openPetDetail(petId: number) {
   });
 }
 
-// openPetDetail(id: number) {
-//   this.selectedPetId.set(id);
-//   this.loadingDetail.set(true);
+onSavePet(payload: UpdatePetDTO) {
+  const pet = this.petDetail();
+  if (!pet || !pet.id) return;
 
-//   this._petService.getPetById(id).subscribe({
-//     next: pet => {
-//       this.petDetail.set(pet);
-//       this.loadingDetail.set(false);
-//     },
-//     error: () => {
-//       this.petDetail.set(null);
-//       this.loadingDetail.set(false);
-//     }
-//   });
-// }
+  this.loadingDetail.set(true);
+
+  this._petService.updatePet(pet.id, payload).subscribe({
+    next: updatedPet => {
+      this.petDetail.set(updatedPet);
+      this.loadingDetail.set(false);
+    },
+    error: err => {
+      console.error('🔴 erro ao atualizar pet:', err);
+      this.loadingDetail.set(false);
+    }
+  });
+}
 
 closePetDetail() {
   this.selectedPetId.set(null);

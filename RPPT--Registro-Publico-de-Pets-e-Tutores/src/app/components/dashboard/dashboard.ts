@@ -59,25 +59,4 @@ export class Dashboard {
     this.selectedPet.set(null);
   }
 
-updatePet(payload: UpdatePetDTO) {
-   console.log('🟢 updatePet RECEBEU:', payload);
-  const pet = this.selectedPet();
-
-  if (!pet || pet.id === undefined){ console.log('🔴 selectedPet é null'); return;}
-
-  this.loading.set(true);
-
-  this.petService.updatePet(pet.id, payload).subscribe({
-    next: updatedPet => {
-      console.log('🟢 pet atualizado:', updatedPet);
-      this.selectedPet.set(updatedPet);
-      this.loading.set(false);
-    },
-        error: err => {
-      console.error('🔴 erro updatePet', err);
-      this.loading.set(false);
-    }
-  });
-}
-
 }

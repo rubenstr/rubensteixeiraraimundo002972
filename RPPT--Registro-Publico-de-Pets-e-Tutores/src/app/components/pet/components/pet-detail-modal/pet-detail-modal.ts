@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, input, output, signal } from '@angular/core';
+import { Component, effect, EventEmitter, inject, input, Output, output, signal } from '@angular/core';
 import { TutorService } from '../../../../services/tutor.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PetService } from '../../../../services/pet.service';
@@ -13,6 +13,8 @@ import { UpdatePetDTO } from '../../../../interfaces/update-pet.dto';
   styleUrl: './pet-detail-modal.css',
 })
 export class PetDetailModal {
+  @Output() save = new EventEmitter<any>();
+
   pet = input<any | null>(null);
   loading = input<boolean>(false);
   close = output<void>();
@@ -115,12 +117,9 @@ savePet() {
     raca: this.form.value.raca ?? undefined,
     idade: this.form.value.idade ?? undefined,
   };
- console.log('Saving pet with values:', payload);
 
   this.save.emit(payload);
 }
-
-save = output<UpdatePetDTO>();
 
 
 }

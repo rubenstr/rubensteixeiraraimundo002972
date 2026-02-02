@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class PetService {
    
-  baseURI = environment.NG_APP_API_URL + 'v1/pets?';
+  baseURI = environment.NG_APP_API_URL + 'v1/pets';
   token: string | null ='';
   headers: any;
 
@@ -57,7 +57,7 @@ updatePet(
   }>
 ) {
   return this._http.put<IPet>(
-    `${this.baseURI}pets/${id}`,
+    `${this.baseURI}/${id}`,
     payload
   );
 }

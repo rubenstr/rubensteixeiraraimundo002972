@@ -20,13 +20,11 @@ export class MenuSuperior {
   }
 
   onFilterInput(event: Event) {
-    console.log(event)
     const value = (event.target as HTMLInputElement).value;
     this.filterChange.emit(value);
   }
 
   onCreatePet() {
-    console.log('Create Pet button clicked');
     this.createPet.emit();
   }
 

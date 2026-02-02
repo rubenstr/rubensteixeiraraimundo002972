@@ -52,6 +52,7 @@
   <app-pet-detail-modal
     [pet]="petDetail()"
     [loading]="loadingDetail()"
+    (save)="onSavePet($event)"
     (close)="closePetDetail()"
   />
 }
