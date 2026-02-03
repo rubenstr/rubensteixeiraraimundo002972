@@ -62,5 +62,23 @@ updateTutor(
   );
 }
 
+  vincularPet(tutorId: number, petId: number): Observable<void> {
+    return this._http.post<void>(
+      `${this.baseURI}/${tutorId}/pets/${petId}`,
+      {}
+    );
+  }
+
+  desvincularPet(tutorId: number, petId: number): Observable<void> {
+    return this._http.delete<void>(
+      `${this.baseURI}/${tutorId}/pets/${petId}`
+    );
+  }
+
+
+
+  
 }
+
+
 

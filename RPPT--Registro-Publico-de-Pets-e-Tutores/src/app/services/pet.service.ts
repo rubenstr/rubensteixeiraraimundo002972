@@ -62,4 +62,12 @@ updatePet(
   );
 }
 
+ getPetsSemTutor(): Observable<IPet[]> {
+    return this._http.get<IPet[]>(`${this.baseURI}`, {
+      params: {
+        semTutor: true,
+      },
+    });
+  }
+
 }

@@ -24,7 +24,11 @@
     [mode]="formMode()"
     (close)="closeForm()"
   />
+}
 
-
-
+@if (showTutorDetail()) {
+  <app-tutor-detail-modal
+    [tutor]="selectedTutor()!"
+    (close)="closeTutorDetail()"
+  />
 }

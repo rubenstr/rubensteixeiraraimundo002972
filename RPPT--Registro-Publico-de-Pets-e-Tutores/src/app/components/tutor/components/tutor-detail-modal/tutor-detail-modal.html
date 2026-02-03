@@ -1,0 +1,125 @@
+<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-xl shadow-xl w-full max-w-4xl p-6 space-y-6">
+
+    <!-- HEADER -->
+    <div class="flex justify-between items-center border-b pb-3">
+      <h2 class="text-xl font-semibold text-slate-800">
+        Detalhes do Tutor
+      </h2>
+
+      <button
+        class="text-slate-500 hover:text-red-500 text-xl"
+        (click)="close.emit()">
+        ✕
+      </button>
+    </div>
+
+    <!-- DADOS DO TUTOR -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- FOTO -->
+      <div class="flex flex-col items-center gap-3">
+        <img
+          [src]="tutorEdit().fotoUrl || 'assets/avatar-placeholder.png'"
+          class="w-32 h-32 rounded-full object-cover border"
+        />
+
+        @if (editMode()) {
+          <input
+            type="file"
+            class="text-sm"
+            (change)="onFileChange($event)"
+          />
+        }
+      </div>
+
+      <!-- CAMPOS -->
+      <div class="md:col-span-2 grid grid-cols-1 gap-4">
+
+        <div>
+          <label class="text-sm text-slate-600">Nome</label>
+          <input
+            class="input"
+            [disabled]="!editMode()"
+            [(ngModel)]="tutorEdit().nome"
+          />
+        </div>
+
+        <div>
+          <label class="text-sm text-slate-600">Telefone</label>
+          <input
+            class="input"
+            [disabled]="!editMode()"
+            [(ngModel)]="tutorEdit().telefone"
+          />
+        </div>
+
+        <div>
+          <label class="text-sm text-slate-600">Endereço</label>
+          <input
+            class="input"
+            [disabled]="!editMode()"
+            [(ngModel)]="tutorEdit().endereco"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTÕES -->
+    <div class="flex justify-end gap-3">
+      @if (!editMode()) {
+        <button class="btn-primary" (click)="enableEdit()">
+          Editar
+        </button>
+      } @else {
+        <button class="btn-secondary" (click)="cancelEdit()">
+          Cancelar
+        </button>
+        <button class="btn-success" (click)="saveTutor()">
+          Salvar
+        </button>
+      }
+    </div>
+
+    <!-- PETS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t">
+
+      <!-- PETS VINCULADOS -->
+      <div>
+        <h3 class="font-semibold mb-2 text-slate-700">Pets do Tutor</h3>
+
+        <div class="space-y-2">
+          @for (pet of petsVinculados; track pet.id) {
+            <div class="card flex justify-between items-center">
+              <span>{{ pet.nome }}</span>
+              <button
+                class="text-red-500 text-sm"
+                (click)="desvincularPet.emit(pet.id)">
+                Remover
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- PETS DISPONÍVEIS -->
+      <div>
+        <h3 class="font-semibold mb-2 text-slate-700">Pets Disponíveis</h3>
+
+        <div class="space-y-2">
+          @for (pet of petsDisponiveis; track pet.id) {
+            <div class="card flex justify-between items-center">
+              <span>{{ pet.nome }}</span>
+              <button
+                class="text-green-600 text-sm"
+                (click)="vincularPet.emit(pet.id)">
+                Vincular
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

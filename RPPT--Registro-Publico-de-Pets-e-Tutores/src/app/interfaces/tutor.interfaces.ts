@@ -17,6 +17,7 @@ export interface ITutorContent {
 }
 
 export interface ITutor extends ITutorContent {
+  fotoUrl?: string;
   pets?: IPetResumo[];
 }
 

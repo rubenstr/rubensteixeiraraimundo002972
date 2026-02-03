@@ -4,6 +4,7 @@ import { AutenticacaoService } from '../../core/services/autenticacao.service';
 import { ITutorContent, ITutorListInterface } from '../../interfaces/tutor.interfaces';
 import { TutorService } from '../../services/tutor.service';
 import { TutorCard } from './components/tutor-card/tutor-card';
+import { openTutorDetail } from '../dashboard/dashboard-state';
 
 @Component({
   selector: 'app-tutor',
@@ -51,11 +52,8 @@ export class Tutor implements OnInit {
       });
     }
 
-      onSelectTutor(tutor: ITutorContent) {
-    console.log('🟢 Tutor selecionado:', tutor);
-    // aqui depois:
-    // - abrir modal
-    // - ou setar signal tutorSelecionado
+  onSelectTutor(tutor: ITutorContent) {
+    openTutorDetail(tutor as any);
   }
 
 }
