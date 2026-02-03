@@ -6,6 +6,8 @@ import { dashboardFilter } from '../dashboard/dashboard-state';
 import { Pagination } from '../shared/pagination/pagination';
 import { PetDetailModal } from './components/pet-detail-modal/pet-detail-modal';
 import { UpdatePetDTO } from '../../interfaces/update-pet.dto';
+import { Router } from '@angular/router';
+import { AutenticacaoService } from '../../core/services/autenticacao.service';
 
 @Component({
   selector: 'app-pet',
@@ -26,11 +28,24 @@ export class Pet implements OnInit {
  petDetail = signal<IPet | null>(null);
  loadingDetail = signal(false);
 
-  constructor(private readonly _petService: PetService) {}
+  constructor(
+    private readonly _petService: PetService, 
+    private readonly router: Router,
+    private readonly authService: AutenticacaoService
+  ) {}
 
-  ngOnInit(): void {
+
+
+  ngOnInit() {
+
     this.loadPets();
+  if (!this.authService.isAuthenticated()) {
+    console.log('🔴 Sem token válido, redirecionando para login');
+    this.router.navigate(['/login']);
+  } else {
+    console.log('🟢 Token válido, carregando componente');
   }
+}
 
   loadPets(): void {
     this._petService.getPets(this.page(), this.size()).subscribe({

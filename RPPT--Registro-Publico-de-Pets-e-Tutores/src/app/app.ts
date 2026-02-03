@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from './components/shared/header/header';
+import { AutenticacaoService } from './core/services/autenticacao.service';
 
 @Component({
   selector: 'app-root',
