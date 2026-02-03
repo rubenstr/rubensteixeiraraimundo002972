@@ -1,1 +1,12 @@
-<p>tutor works!</p>
+@if (loading()) {
+  <p class="text-gray-500">Carregando tutores...</p>
+}
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+  @for (tutor of tutoresList(); track tutor.id) {
+    <app-tutor-card
+      [tutor]="tutor"
+      (select)="onSelectTutor($event)"
+    />
+  }
+</div>
