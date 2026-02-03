@@ -1,28 +1,34 @@
-import { Component , signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuSuperior } from '../shared/menu-superior/menu-superior';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, ActivatedRoute } from '@angular/router';
 import { dashboardFilter } from './dashboard-state';
 import { PetFormModal } from '../pet/components/pet-form-modal/pet-form-modal';
 import { PetDetailModal } from '../pet/components/pet-detail-modal/pet-detail-modal';
 import { PetService } from '../../services/pet.service';
 import { IPet } from '../../interfaces/pet.interfaces';
-import { UpdatePetDTO } from '../../interfaces/update-pet.dto';
+import { AutenticacaoService } from '../../core/services/autenticacao.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
     PetFormModal,
-    PetDetailModal,    
+    PetDetailModal,
     CommonModule,
     MenuSuperior,
-    RouterOutlet],
+    RouterOutlet
+  ],
   templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css',
+  styleUrls: ['./dashboard.css']
 })
-export class Dashboard {
-  constructor(private readonly router: Router, private readonly petService: PetService) {}
+export class Dashboard implements OnInit {
+  constructor(
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly petService: PetService,
+    private readonly authService: AutenticacaoService
+  ) {}
 
   activeTab = signal<'pets' | 'tutores'>('pets');
   filterText = signal('');
@@ -34,10 +40,20 @@ export class Dashboard {
   showPetDetail = signal(false);
   loading = signal(false);
 
+  ngOnInit(): void {
+    // Verifica token ao iniciar Dashboard
+    if (!this.authService.isAuthenticated()) {
+      console.log('🔴 Sem token válido, redirecionando para login');
+      this.router.navigate(['/login']);
+    }
+  }
+
   onTabChange(tab: 'pets' | 'tutores') {
     this.activeTab.set(tab);
     this.filterText.set('');
-    this.router.navigate([tab === 'pets' ? '/pets' : '/tutors']);
+
+    // Navegação relativa para rotas filhas do Dashboard
+    this.router.navigate([tab], { relativeTo: this.route });
   }
 
   onFilterChange(value: string) {
@@ -58,5 +74,4 @@ export class Dashboard {
     this.showPetDetail.set(false);
     this.selectedPet.set(null);
   }
-
 }
