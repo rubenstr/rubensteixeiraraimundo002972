@@ -36,6 +36,14 @@ export interface IFotoTutor {
   url: string;
 }
 
+export interface IUpdateTutor {
+  nome: string;
+  email: string;
+  telefone: string;
+  endereco: string;
+  cpf: number;
+}
+
 export interface IFotoPet {
   id: number;
   nome: string;

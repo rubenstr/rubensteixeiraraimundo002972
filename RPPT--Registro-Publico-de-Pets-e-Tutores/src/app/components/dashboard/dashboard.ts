@@ -136,11 +136,12 @@ export class Dashboard implements OnInit {
 
 
 
-  updateTutor(tutor: Partial<ITutor>) {
+  updateTutor(event: any) {
+    console.log('****dash Updating tutor with data:', event);
     const current = this.selectedTutor();
     if (!current?.id) return;
 
-    this.tutorService.update(current.id, tutor).subscribe({
+    this.tutorService.update(current.id, event).subscribe({
       next: updated => {
         this.selectedTutor.set({ ...current, ...updated });
       }

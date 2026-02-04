@@ -35,9 +35,15 @@
   />
 }
 
-@if (showTutorDetail()) {
+@if (selectedTutor()) {
   <app-tutor-detail-modal
     [tutor]="selectedTutor()!"
+        (save)="updateTutor($event)"
     (close)="closeTutorDetail()"
   />
 }
+
+
+<p class="text-red-600 font-bold">
+  showTutorDetail = {{ showTutorDetail() }}
+</p>

@@ -87,8 +87,9 @@ export class TutorFormModal implements OnInit {
 
   private updateTutor(payload: any) {
     if (!this.tutor?.id) return;
-
+                  console.log('Updating tutor with ID:', payload);
     this.tutorService.update(this.tutor.id, payload).subscribe({
+      
       next: () => this.uploadPhotoIfNeeded(this.tutor!.id),
       error: () => this.loading.set(false),
     });

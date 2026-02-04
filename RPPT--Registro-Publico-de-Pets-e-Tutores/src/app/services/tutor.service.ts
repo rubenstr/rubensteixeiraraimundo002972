@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { ITutor, ITutorListInterface } from '../interfaces/tutor.interfaces';
+import { ITutor, ITutorListInterface, IUpdateTutor } from '../interfaces/tutor.interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -39,7 +39,16 @@ create(payload: any) {
 }
 
 update(id: number, payload: any) {
-  return this._http.put(`/v1/tutores/${id}`, payload);
+  console.log(payload)
+  const payl: IUpdateTutor = {
+    nome: payload.nome,
+    email: payload.email,
+    telefone: payload.telefone,
+    endereco: payload.endereco,
+    cpf: payload.cpf
+  }
+
+  return this._http.put(`${this.baseURI}/${id}`, payl);
 }
 
 uploadPhoto(id: number, file: File) {

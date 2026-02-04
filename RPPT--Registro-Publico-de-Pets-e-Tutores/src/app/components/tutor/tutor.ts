@@ -53,6 +53,7 @@ export class Tutor implements OnInit {
     }
 
   onSelectTutor(tutor: ITutorContent) {
+    console.log('Tutor selecionado:', tutor);
     openTutorDetail(tutor as any);
   }
 
