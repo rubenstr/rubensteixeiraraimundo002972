@@ -12,6 +12,7 @@ export class MenuSuperior {
 
   activeTab = input<'pets' | 'tutores'>('pets');
   createPet = output<void>();
+  createTutor = output<void>();
   tabChange = output<'pets' | 'tutores'>();
   filterChange = output<string>();
 
@@ -26,6 +27,10 @@ export class MenuSuperior {
 
   onCreatePet() {
     this.createPet.emit();
+  }
+
+  onCreateTutor() {
+    this.createTutor.emit();
   }
 
 }

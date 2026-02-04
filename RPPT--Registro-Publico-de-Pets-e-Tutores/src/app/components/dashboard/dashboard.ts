@@ -12,12 +12,14 @@ import { TutorDetailModal } from '../tutor/components/tutor-detail-modal/tutor-d
 import { ITutor } from '../../interfaces/tutor.interfaces';
 import { TutorService } from '../../services/tutor.service';
 import { Observable } from 'rxjs';
+import { TutorFormModal } from '../tutor/components/tutor-form-modal/tutor-form-modal';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
     PetFormModal,
+    TutorFormModal,
     TutorDetailModal,
     PetDetailModal,
     CommonModule,
@@ -43,6 +45,7 @@ export class Dashboard implements OnInit {
 
   formMode = signal<'create' | 'edit'>('create');
   showPetForm = signal(false);
+  showTutorForm = signal(false);
 
   showPetDetail = signal(false);
   loading = signal(false);
@@ -80,9 +83,20 @@ export class Dashboard implements OnInit {
     this.showPetForm.set(true);
   }
 
+  openCreateTutor(){
+    this.selectedTutor.set(null);
+    this.formMode.set('create');
+    this.showTutorForm.set(true);
+  }
+
   closeForm() {
     this.showPetForm.set(false);
   }
+
+  closeTutorForm() {
+    this.showTutorForm.set(false);
+  }
+
 
   closeDetail() {
     this.showPetDetail.set(false);

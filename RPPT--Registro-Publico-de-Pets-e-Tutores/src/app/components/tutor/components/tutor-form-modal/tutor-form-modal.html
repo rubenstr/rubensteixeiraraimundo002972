@@ -1,0 +1,104 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+  <div class="bg-white rounded-lg w-full max-w-lg shadow-lg">
+
+    <header class="px-6 py-4 border-b">
+      <h2 class="text-lg font-semibold text-center text-gray-800">
+        {{ title() }}
+      </h2>
+    </header>
+
+    <form
+      [formGroup]="form"
+      class="p-6 space-y-4"
+      (ngSubmit)="submit()"
+    >
+
+      <!-- Nome -->
+      <div>
+        <label class="text-sm font-medium text-gray-700">Nome completo</label>
+        <input
+          type="text"
+          formControlName="nome"
+          class="w-full mt-1 px-3 py-2 border rounded-md
+                 focus:ring focus:ring-indigo-200"
+        />
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="text-sm font-medium text-gray-700">Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          class="w-full mt-1 px-3 py-2 border rounded-md
+                 focus:ring focus:ring-indigo-200"
+        />
+      </div>
+
+      <!-- Telefone -->
+      <div>
+        <label class="text-sm font-medium text-gray-700">Telefone</label>
+        <input
+          type="text"
+          formControlName="telefone"
+          placeholder="(11) 91234-5678"
+          class="w-full mt-1 px-3 py-2 border rounded-md
+                 focus:ring focus:ring-indigo-200"
+        />
+      </div>
+
+      <!-- Endereço -->
+      <div>
+        <label class="text-sm font-medium text-gray-700">Endereço</label>
+        <textarea
+          rows="2"
+          formControlName="endereco"
+          class="w-full mt-1 px-3 py-2 border rounded-md
+                 focus:ring focus:ring-indigo-200"
+        ></textarea>
+      </div>
+
+      <!-- CPF -->
+      <div>
+        <label class="text-sm font-medium text-gray-700">CPF</label>
+        <input
+          type="text"
+          formControlName="cpf"
+          class="w-full mt-1 px-3 py-2 border rounded-md
+                 focus:ring focus:ring-indigo-200"
+        />
+      </div>
+
+      <!-- Foto -->
+      <div>
+        <label class="text-sm font-medium text-gray-700">Foto</label>
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onFileChange($event)"
+          class="mt-1 block w-full text-sm"
+        />
+      </div>
+
+      <footer class="flex justify-end gap-3 pt-4 border-t">
+        <button
+          type="button"
+          class="px-4 py-2 text-gray-600 hover:text-gray-800"
+          (click)="onCancel()"
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="submit"
+          [disabled]="loading()"
+          class="px-4 py-2 bg-indigo-600 text-white rounded-md
+                 hover:bg-indigo-700 disabled:opacity-50"
+        >
+          {{ loading() ? 'Salvando...' : 'Salvar' }}
+        </button>
+      </footer>
+
+    </form>
+  </div>
+</div>

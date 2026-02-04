@@ -3,6 +3,7 @@
   (tabChange)="onTabChange($event)"
   (filterChange)="onFilterChange($event)"
   (createPet)="openCreatePet()"
+  (createTutor)="openCreateTutor()"
 />
 <section class="p-4">
   <router-outlet
@@ -23,6 +24,14 @@
     [pet]="selectedPet()"
     [mode]="formMode()"
     (close)="closeForm()"
+  />
+}
+
+@if (showTutorForm()) {
+  <app-tutor-form-modal
+    [tutor]="selectedTutor()"
+    [mode]="formMode()"
+    (close)="closeTutorForm()"
   />
 }
 

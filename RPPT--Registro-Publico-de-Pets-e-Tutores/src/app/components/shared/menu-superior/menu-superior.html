@@ -67,6 +67,19 @@
           
         </button>
       }
+      @if (activeTab() === 'tutores') {
+        <button
+          type="button"
+          class="flex items-center justify-center gap-3
+                 px-3 py-1 bg-indigo-600 text-white
+                 text-sm font-medium rounded-md
+                 hover:bg-indigo-700 transition"
+          (click)="onCreateTutor()"
+        >
+          <span class="text-lg">+</span>
+          
+        </button>
+      }
     </div>
 
   </div>
