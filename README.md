@@ -1,3 +1,9 @@
+📌 PROCESSO SELETIVO SEPLAG-MT 2026
+    NÚMERO DE INSCRIÇÃO: 16272
+    CARGO: ANALISTA DE TECNOLOGIA DA INFORMAÇÃO
+    PERFIL: ENGENHEIRO DA COMPUTAÇÃO - SÊNIOR
+
+
 # 🐾 RPPT — Registro Público de Pets e Tutores
 
 Sistema web para gerenciamento de **Tutores** e **Pets**, permitindo cadastro, edição, visualização e **vinculação/desvinculação de pets a tutores**, com arquitetura moderna baseada em **Angular 21 + tailwind**.
@@ -101,6 +107,13 @@ npm install
 
 # Execute o projeto
 ng run start
+
+🔑 Processo de Autenticação
+Para autenticar um usuário, é necessário realizar uma chamada ao endpoint de login informando as credenciais válidas.
+
+Credenciais de exemplo:
+Username: "admin"
+Senha: "admin"
 
 
 ## ▶️ arquivos de configuração do projeto
