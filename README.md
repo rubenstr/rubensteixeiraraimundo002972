@@ -31,7 +31,7 @@ O RPPT é uma aplicação frontend desenvolvida em Angular com foco em:
 - **Componentes burros vs componentes de orquestração**
 
 ---
-
+```text
 src/app/
 ├── dashboard/
 │   ├── dashboard.ts
