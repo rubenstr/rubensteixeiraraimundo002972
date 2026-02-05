@@ -32,8 +32,7 @@ O RPPT é uma aplicação frontend desenvolvida em Angular com foco em:
 
 ---
 
-## 🧩 Estrutura de Pastas
-
+🧩 Estrutura de Pastas
 src/app
 │
 ├── dashboard
@@ -80,6 +79,7 @@ src/app
 └── services
     ├── pet.service.ts
     └── tutor.service.ts
+
 
 
 
