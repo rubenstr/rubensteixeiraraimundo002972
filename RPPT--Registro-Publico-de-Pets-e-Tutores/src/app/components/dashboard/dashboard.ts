@@ -1,4 +1,4 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, signal, OnInit, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuSuperior } from '../shared/menu-superior/menu-superior';
 import { Router, RouterOutlet, ActivatedRoute } from '@angular/router';
@@ -9,7 +9,7 @@ import { PetService } from '../../services/pet.service';
 import { IPet } from '../../interfaces/pet.interfaces';
 import { AutenticacaoService } from '../../core/services/autenticacao.service';
 import { TutorDetailModal } from '../tutor/components/tutor-detail-modal/tutor-detail-modal';
-import { ITutor } from '../../interfaces/tutor.interfaces';
+import { ITutor, ITutorContent } from '../../interfaces/tutor.interfaces';
 import { TutorService } from '../../services/tutor.service';
 import { Observable } from 'rxjs';
 import { TutorFormModal } from '../tutor/components/tutor-form-modal/tutor-form-modal';
@@ -52,13 +52,13 @@ export class Dashboard implements OnInit {
 
   //******* */ Signals TUTOR **********-- >
   selectedTutor = selectedTutor;
-  petsDoTutor = signal<IPet[]>([]);
-  petsSemTutor = signal<IPet[]>([]);
+  petsVinculados = signal<IPet[]>([]);
+  petsDisponiveis = signal<IPet[]>([]);
   showTutorDetail = signal(false);
+  allPets = signal<IPet[]>([])
   loadingTutor = signal(false);
 
   ngOnInit(): void {
-    // Verifica token ao iniciar Dashboard
     if (!this.authService.isAuthenticated()) {
       console.log('🔴 Sem token válido, redirecionando para login');
       this.router.navigate(['/login']);
@@ -68,8 +68,6 @@ export class Dashboard implements OnInit {
   onTabChange(tab: 'pets' | 'tutores') {
     this.activeTab.set(tab);
     this.filterText.set('');
-
-    // Navegação relativa para rotas filhas do Dashboard
     this.router.navigate([tab], { relativeTo: this.route });
   }
 
@@ -103,35 +101,59 @@ export class Dashboard implements OnInit {
     this.selectedPet.set(null);
   }
 
-  // metoodos para gerenciar tutor
-  openTutorDetail(tutor: ITutor) {
-    this.selectedTutor.set(tutor);
-    this.showTutorDetail.set(true);
-    this.loadTutorRelations(tutor.id!);
-  }
+openTutorDetail(tutorResumo: ITutorContent) {
+  console.log("chamou openTutorDetail do dashboard");
+  this.loadingTutor.set(true);
+  this.tutorService.getTutorById(tutorResumo.id!).subscribe({
+    next: (tutorCompleto) => {
+      this.selectedTutor.set(tutorCompleto);
+      this.petsVinculados.set(tutorCompleto.pets ?? []);
+
+      this.loadPetsDisponiveis(tutorCompleto.pets ?? []);
+      this.showTutorDetail.set(true);
+    },
+    complete: () => this.loadingTutor.set(false),
+  });
+}
+
+
+private loadPetsDisponiveis(petsVinculados: IPet[]) {
+  this.petService.getAllPets().subscribe({
+    next: response => {
+      const todosPets = response.content ?? [];
+      const petsVinculadosIds = new Set(
+        petsVinculados.map(p => p.id)
+      );
+      const disponiveis = todosPets.filter(
+        pet => !petsVinculadosIds.has(pet.id));
+      this.petsDisponiveis.set(disponiveis);
+    }
+  });
+}
+
 
 
   closeTutorDetail() {
     this.showTutorDetail.set(false);
     this.selectedTutor.set(null);
-    this.petsDoTutor.set([]);
-    this.petsSemTutor.set([]);
+    this.petsVinculados.set([]);
+    this.allPets.set([]);
   }
 
-  private loadTutorRelations(tutorId: number) {
-    this.loadingTutor.set(true);
+  // private loadTutorRelations(tutorId: number) {
+  //   this.loadingTutor.set(true);
 
-    this.tutorService.getTutorById(tutorId).subscribe({
-      next: (tutor: any) => {
-        this.petsDoTutor.set(tutor.pets ?? []);
-      },
-      complete: () => this.loadingTutor.set(false),
-    });
+  //   this.tutorService.getTutorById(tutorId).subscribe({
+  //     next: (tutor: any) => {
+  //       this.petsVinculados.set(tutor.pets ?? []);
+  //     },
+  //     complete: () => this.loadingTutor.set(false),
+  //   });
 
-    this.petService.getPetsSemTutor().subscribe({
-      next: (pets: any) => this.petsSemTutor.set(pets),
-    });
-  }
+  //   this.petService.getPetsSemTutor().subscribe({
+  //     next: (pets: any) => this.allPets.set(pets),
+  //   });
+  // }
 
 
 
@@ -148,23 +170,23 @@ export class Dashboard implements OnInit {
     });
   }
 
-  vincularPet(petId: number) {
-    const tutor = this.selectedTutor();
-    if (!tutor?.id) return;
+vincularPet(petId: number) {
+  const tutor = this.selectedTutor();
+  if (!tutor?.id) return;
 
-    this.tutorService.vincularPet(tutor.id, petId).subscribe({
-      next: () => {
-        const pet = this.petsSemTutor().find(p => p.id === petId);
-        if (!pet) return;
+  this.tutorService.vincularPet(tutor.id, petId).subscribe({
+    next: () => {
+      const pet = this.petsDisponiveis().find(p => p.id === petId);
+      if (!pet) return;
 
-        this.petsSemTutor.set(
-          this.petsSemTutor().filter(p => p.id !== petId)
-        );
+      this.petsDisponiveis.set(
+        this.petsDisponiveis().filter(p => p.id !== petId)
+      );
 
-        this.petsDoTutor.set([...this.petsDoTutor(), pet]);
-      }
-    });
-  }
+      this.petsVinculados.set([...this.petsVinculados(), pet]);
+    }
+  });
+}
 
   desvincularPet(petId: number) {
     const tutor = this.selectedTutor();
@@ -172,14 +194,14 @@ export class Dashboard implements OnInit {
 
     this.tutorService.desvincularPet(tutor.id, petId).subscribe({
       next: () => {
-        const pet = this.petsDoTutor().find(p => p.id === petId);
+        const pet = this.petsVinculados().find(p => p.id === petId);
         if (!pet) return;
 
-        this.petsDoTutor.set(
-          this.petsDoTutor().filter(p => p.id !== petId)
+        this.petsVinculados.set(
+          this.petsVinculados().filter(p => p.id !== petId)
         );
 
-        this.petsSemTutor.set([...this.petsSemTutor(), pet]);
+        this.allPets.set([...this.allPets(), pet]);
       }
     });
   }

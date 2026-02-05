@@ -34,6 +34,12 @@ getPetById(id: number): Observable<IPetContent> {
   );
 }
 
+getAllPets(): Observable<IPetListInterface> {
+  return this._http.get<IPetListInterface>(
+    `${environment.NG_APP_API_URL}v1/pets`
+  );
+}
+
 create(payload: any) {
   return this._http.post<IPet>(`${environment.NG_APP_API_URL}v1/pets`, payload);
 }

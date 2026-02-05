@@ -38,12 +38,10 @@
 @if (selectedTutor()) {
   <app-tutor-detail-modal
     [tutor]="selectedTutor()!"
-        (save)="updateTutor($event)"
+    [petsDisponiveis]="petsDisponiveis()"
+    (vincularPet)="vincularPet($event)"
+    (desvincularPet)="desvincularPet($event)"
+    (save)="updateTutor($event)"
     (close)="closeTutorDetail()"
   />
 }
-
-
-<p class="text-red-600 font-bold">
-  showTutorDetail = {{ showTutorDetail() }}
-</p>

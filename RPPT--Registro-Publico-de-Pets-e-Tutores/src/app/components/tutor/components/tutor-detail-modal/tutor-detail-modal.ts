@@ -14,12 +14,14 @@ export class TutorDetailModal {
   @Input({ required: true }) tutor!: ITutor;
   @Input() petsVinculados: IPet[] = [];
   @Input() petsDisponiveis: IPet[] = [];
+  @Output() uploadFoto = new EventEmitter<File>();
+  @Output() vincularPet = new EventEmitter<number>();
+  @Output() desvincularPet = new EventEmitter<number>();
 
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<ITutor>();
-  @Output() vincularPet = new EventEmitter<number>();
-  @Output() desvincularPet = new EventEmitter<number>();
-  @Output() uploadFoto = new EventEmitter<File>();
+  
+ 
 
   editMode = signal(false);
 

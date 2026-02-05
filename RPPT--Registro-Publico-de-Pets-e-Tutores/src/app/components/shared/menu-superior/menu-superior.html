@@ -28,6 +28,7 @@
       class="flex flex-col sm:flex-row items-stretch sm:items-center
              gap-3 ml-auto w-full sm:w-auto"
     >
+    @if (activeTab() === 'pets') {
       <div class="relative w-full sm:w-72">
         <input
           type="text"
@@ -53,6 +54,7 @@
           />
         </svg>
       </div>
+    }
 
       @if (activeTab() === 'pets') {
         <button

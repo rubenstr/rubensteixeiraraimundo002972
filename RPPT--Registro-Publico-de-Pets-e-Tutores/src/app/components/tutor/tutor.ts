@@ -4,7 +4,6 @@ import { AutenticacaoService } from '../../core/services/autenticacao.service';
 import { ITutorContent, ITutorListInterface } from '../../interfaces/tutor.interfaces';
 import { TutorService } from '../../services/tutor.service';
 import { TutorCard } from './components/tutor-card/tutor-card';
-import { openTutorDetail } from '../dashboard/dashboard-state';
 
 @Component({
   selector: 'app-tutor',
@@ -18,7 +17,7 @@ export class Tutor implements OnInit {
   loading = signal(false);
 
   page = signal(0);
-  size = signal(10);
+  size = signal(100);
   total = signal(0);
   pageCount = signal(0);
 
@@ -52,9 +51,14 @@ export class Tutor implements OnInit {
       });
     }
 
-  onSelectTutor(tutor: ITutorContent) {
-    console.log('Tutor selecionado:', tutor);
-    openTutorDetail(tutor as any);
-  }
-
+ onSelectTutor(tutor: ITutorContent) {
+  this._tutorService.getTutorById(tutor.id).subscribe({
+    next: tutorCompleto => {
+      openTutorDetail(tutorCompleto);
+    },
+    error: () => {
+      console.error('Erro ao carregar tutor completo');
+    }
+  });
+}
 }

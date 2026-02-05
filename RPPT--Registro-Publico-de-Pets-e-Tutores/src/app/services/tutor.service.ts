@@ -28,12 +28,6 @@ getTutores(page: number, size: number): Observable<ITutorListInterface> {
   );
 }
 
-getTutorById(id: number) {
-  return this._http.get(
-    `${environment.NG_APP_API_URL}v1/tutores/${id}`
-  );
-}
-
 create(payload: any) {
   return this._http.post<ITutor>(`${environment.NG_APP_API_URL}v1/tutores`, payload);
 }
@@ -83,6 +77,12 @@ updateTutor(
       `${this.baseURI}/${tutorId}/pets/${petId}`
     );
   }
+
+  getTutorById(id: number): Observable<ITutor> {
+  return this._http.get<ITutor>(
+    `${this.baseURI}/${id}`
+  );
+}
 
 
 

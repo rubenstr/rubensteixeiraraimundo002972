@@ -27,8 +27,6 @@ export function closePetDetail() {
 export function openTutorDetail(tutor: ITutorContent) {
   selectedTutor.set(tutor);
   showTutorDetail.set(true);
-  console.log('****openTutorDetail selectedTutor:', selectedTutor());
-  console.log('****openTutorDetail showTutorDetail:', showTutorDetail());
 }
 
 export function closeTutorDetail() {
