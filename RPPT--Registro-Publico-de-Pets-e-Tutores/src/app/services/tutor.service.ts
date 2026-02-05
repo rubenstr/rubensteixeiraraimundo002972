@@ -33,7 +33,6 @@ create(payload: any) {
 }
 
 update(id: number, payload: any) {
-  console.log(payload)
   const payl: IUpdateTutor = {
     nome: payload.nome,
     email: payload.email,

@@ -62,7 +62,6 @@ export class Dashboard implements OnInit {
 
   ngOnInit(): void {
     if (!this.authService.isAuthenticated()) {
-      console.log('🔴 Sem token válido, redirecionando para login');
       this.router.navigate(['/login']);
     }
   }
@@ -104,7 +103,6 @@ export class Dashboard implements OnInit {
   }
 
 openTutorDetail(tutorResumo: ITutorContent) {
-  console.log("chamou openTutorDetail do dashboard", this.petsDisponiveis());
   this.loadingTutor.set(true);
   this.tutorService.getTutorById(tutorResumo.id!).subscribe({
     next: (tutorCompleto) => {
@@ -143,7 +141,6 @@ private loadPetsDisponiveis(petsVinculados: IPet[]) {
   }
 
   updateTutor(event: any) {
-    console.log('****dash Updating tutor with data:', event);
     const current = this.selectedTutor();
     if (!current?.id) return;
 

@@ -12,7 +12,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req);
   }
 
-  // Adiciona access token
   const token = authService.token;
   if (token) {
     req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
@@ -21,16 +20,13 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 401 && authService.refreshToken) {
-        // Chama refresh token
         return authService.refreshTokenRequest().pipe(
           switchMap(() => {
-            // Reexecuta a requisição original com token novo
             const newToken = authService.token;
             const newReq = req.clone({ setHeaders: { Authorization: `Bearer ${newToken}` } });
             return next(newReq);
           }),
           catchError(innerErr => {
-            // Se falhar no refresh, força logout
             authService.logout();
             return throwError(() => innerErr);
           })

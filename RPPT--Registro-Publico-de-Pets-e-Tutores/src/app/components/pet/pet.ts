@@ -40,10 +40,8 @@ export class Pet implements OnInit {
 
     this.loadPets();
   if (!this.authService.isAuthenticated()) {
-    console.log('🔴 Sem token válido, redirecionando para login');
     this.router.navigate(['/login']);
   } else {
-    console.log('🟢 Token válido, carregando componente');
   }
 }
 

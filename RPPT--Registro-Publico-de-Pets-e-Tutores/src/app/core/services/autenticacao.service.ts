@@ -33,7 +33,6 @@ export class AutenticacaoService {
       localStorage.setItem(this.TOKEN_KEY, accessToken);
       localStorage.setItem(this.REFRESH_KEY, refreshToken);
     }
-    console.log('🟢 Tokens atualizados:', { accessToken, refreshToken });
   }
 
   loadTokenFromStorage(): void {

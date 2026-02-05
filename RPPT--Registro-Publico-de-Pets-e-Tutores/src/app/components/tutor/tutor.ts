@@ -36,10 +36,8 @@ export class Tutor implements OnInit {
   
       this.loadTutores();
     if (!this.authService.isAuthenticated()) {
-      console.log('🔴 Sem token válido, redirecionando para login');
       this.router.navigate(['/login']);
     } else {
-      console.log('🟢 Token válido, carregando componente');
     }
   }
   
@@ -55,12 +53,6 @@ export class Tutor implements OnInit {
         }
       });
     }
-
-// onSelectTutor(tutor: ITutorContent) {
-//   console.log('Tutor selecionado:', tutor);
-//   this._dashboard.openTutorDetail(tutor);
-// }
-
 
  onSelectTutor(tutor: ITutorContent) {
   this._tutorService.getTutorById(tutor.id).subscribe({
@@ -87,8 +79,6 @@ private loadPetsDisponiveis(petsVinculados: IPet[]) {
         pet => !vinculadosIds.has(pet.id)
       );
 
-      // ⚠️ onde você já estiver guardando petsDisponiveis
-      console.log('Pets disponíveis carregados:', disponiveis);
       this.petsDisponiveis.set(disponiveis);
     }
   });

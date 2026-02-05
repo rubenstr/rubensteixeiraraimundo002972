@@ -41,7 +41,6 @@ export class TutorDetailModal {
   }
 
   saveTutor() {
-    console.log('Saving tutor:', this.tutorEdit());
     this.save.emit(this.tutorEdit());
     this.editMode.set(false);
   }
