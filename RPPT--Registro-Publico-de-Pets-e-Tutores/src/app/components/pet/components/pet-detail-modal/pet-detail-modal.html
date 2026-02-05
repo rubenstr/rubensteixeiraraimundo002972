@@ -11,7 +11,6 @@
     class="relative bg-white rounded-xl shadow-xl
            w-full max-w-2xl mx-4 p-6 z-10">
 
-    <!-- HEADER -->
     <div class="flex items-center justify-between mb-6">
 
       <h2 class="text-xl font-bold text-gray-900">
@@ -31,10 +30,8 @@
 
     </div>
 
-    <!-- CONTENT -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-      <!-- LEFT -->
       <div class="space-y-3 text-sm text-gray-700">
 
         @if (loading()) {
@@ -51,7 +48,6 @@
             [formGroup]="form"
             class="space-y-3">
 
-            <!-- NOME -->
             <div>
               <label class="text-sm font-medium">Nome</label>
               <input
@@ -61,7 +57,6 @@
                 class="w-full mt-1 px-3 py-2 border rounded-md" />
             </div>
 
-            <!-- RAÇA -->
             <div>
               <label class="text-sm font-medium">Raça</label>
               <input
@@ -71,7 +66,6 @@
                 class="w-full mt-1 px-3 py-2 border rounded-md" />
             </div>
 
-            <!-- IDADE -->
             <div>
               <label class="text-sm font-medium">Idade</label>
               <input
@@ -85,7 +79,6 @@
         }
       </div>
 
-      <!-- RIGHT (FOTO) -->
       <div class="flex items-center justify-center">
         <label class="relative cursor-pointer group">
 
@@ -116,7 +109,6 @@
 
     </div>
 
-    <!-- TUTORES -->
     @if (!loading() && pet()?.tutores?.length) {
 
       <div class="mt-6">
@@ -172,7 +164,6 @@
       </div>
     }
 
-    <!-- FOOTER -->
     <div class="mt-8 flex justify-end gap-3">
 
       <button

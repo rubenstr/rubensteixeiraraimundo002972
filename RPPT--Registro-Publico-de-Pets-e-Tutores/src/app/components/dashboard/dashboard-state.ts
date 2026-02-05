@@ -4,15 +4,11 @@ import { ITutor, ITutorContent } from '../../interfaces/tutor.interfaces';
 
 export const dashboardFilter = signal('');
 
-/* ---------------- PET ---------------- */
 export const selectedPet = signal<IPet | null>(null);
 export const showPetDetail = signal(false);
 
-/* ---------------- TUTOR ---------------- */
 export const selectedTutor = signal<ITutor | null>(null);
 export const showTutorDetail = signal(false);
-
-/* ---------- Helpers (opcional, mas recomendado) ---------- */
 
 export function openPetDetail(pet: IPet) {
   selectedPet.set(pet);

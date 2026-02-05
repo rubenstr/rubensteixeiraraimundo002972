@@ -1,47 +1,24 @@
-<app-menu-superior
-  [activeTab]="activeTab()"
-  (tabChange)="onTabChange($event)"
-  (filterChange)="onFilterChange($event)"
-  (createPet)="openCreatePet()"
-  (createTutor)="openCreateTutor()"
-/>
+<app-menu-superior [activeTab]="activeTab()" (tabChange)="onTabChange($event)" (filterChange)="onFilterChange($event)"
+  (createPet)="openCreatePet()" (createTutor)="openCreateTutor()" />
 <section class="p-4">
-  <router-outlet
-></router-outlet>
+  <router-outlet></router-outlet>
 </section>
 
 
-  <app-pet-detail-modal
-    [pet]="selectedPet()"
-    [loading]="loading()"
-    (close)="closeDetail()"
-  />
+<app-pet-detail-modal [pet]="selectedPet()" [loading]="loading()" (close)="closeDetail()" />
 
 
 
 @if (showPetForm()) {
-  <app-pet-form-modal
-    [pet]="selectedPet()"
-    [mode]="formMode()"
-    (close)="closeForm()"
-  />
+<app-pet-form-modal [pet]="selectedPet()" [mode]="formMode()" (close)="closeForm()" />
 }
 
 @if (showTutorForm()) {
-  <app-tutor-form-modal
-    [tutor]="selectedTutor()"
-    [mode]="formMode()"
-    (close)="closeTutorForm()"
-  />
+<app-tutor-form-modal [tutor]="selectedTutor()" [mode]="formMode()" (close)="closeTutorForm()" />
 }
 
 @if (selectedTutor()) {
-  <app-tutor-detail-modal
-    [tutor]="selectedTutor()!"
-    [petsDisponiveis]="petsDisponiveis()"
-    (vincularPet)="vincularPet($event)"
-    (desvincularPet)="desvincularPet($event)"
-    (save)="updateTutor($event)"
-    (close)="closeTutorDetail()"
-  />
+<app-tutor-detail-modal [tutor]="selectedTutor()!" [petsDisponiveis]="petsDisponiveis()"
+  (vincularPet)="vincularPet($event)" (desvincularPet)="desvincularPet($event)" (save)="updateTutor($event)"
+  (close)="closeTutorDetail()" />
 }

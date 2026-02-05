@@ -3,7 +3,6 @@ import { Component, effect, EventEmitter, inject, input, Output, output, signal 
 import { TutorService } from '../../../../services/tutor.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PetService } from '../../../../services/pet.service';
-import { UpdatePetDTO } from '../../../../interfaces/update-pet.dto';
 
 @Component({
   selector: 'app-pet-detail-modal',
@@ -95,7 +94,6 @@ toggleEdit() {
     this.photoPreview.set(null);
   }
 }
-
 
     onPhotoSelected(event: Event) {
     const file = (event.target as HTMLInputElement)?.files?.[0];

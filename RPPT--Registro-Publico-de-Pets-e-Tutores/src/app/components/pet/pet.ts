@@ -1,4 +1,4 @@
-import { Component, computed, input, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IPet, IPetContent, IPetListInterface } from '../../interfaces/pet.interfaces';
 import { PetService } from '../../services/pet.service';

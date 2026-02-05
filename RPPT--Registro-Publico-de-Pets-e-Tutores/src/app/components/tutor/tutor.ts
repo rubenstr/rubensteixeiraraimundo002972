@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AutenticacaoService } from '../../core/services/autenticacao.service';
 import { ITutorContent, ITutorListInterface } from '../../interfaces/tutor.interfaces';

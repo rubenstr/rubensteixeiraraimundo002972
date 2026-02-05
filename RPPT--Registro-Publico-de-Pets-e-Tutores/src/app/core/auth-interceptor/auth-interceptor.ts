@@ -6,7 +6,6 @@ import { catchError, switchMap, throwError } from 'rxjs';
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AutenticacaoService);
 
-  // Bypass para endpoints públicos
   const PUBLIC_ENDPOINTS = ['/autenticacao/login', '/autenticacao/refresh'];
   if (PUBLIC_ENDPOINTS.some(url => req.url.includes(url))) {
     return next(req);
