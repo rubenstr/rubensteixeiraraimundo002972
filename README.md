@@ -32,53 +32,43 @@ O RPPT é uma aplicação frontend desenvolvida em Angular com foco em:
 
 ---
 
-🧩 Estrutura de Pastas
-src/app
-│
-├── dashboard
+src/app/
+├── dashboard/
 │   ├── dashboard.ts
 │   ├── dashboard.html
-│   └── dashboard-router
-│
-├── login
+│   └── dashboard-router/
+├── login/
 │   └── (fluxo de autenticação)
-│
-├── pet
+├── pet/
 │   ├── pet.ts
-│   └── components
-│       ├── pet-detail-modal
-│       └── pet-form-modal
-│
-├── tutor
+│   └── components/
+│       ├── pet-detail-modal/
+│       └── pet-form-modal/
+├── tutor/
 │   ├── tutor.ts
-│   └── components
-│       ├── tutor-card
-│       ├── tutor-detail-modal
-│       └── tutor-form-modal
-│
-├── shared
-│   └── components
-│       ├── header
-│       ├── menu-superior
-│       └── pagination
-│
-├── core
-│   ├── guards
+│   └── components/
+│       ├── tutor-card/
+│       ├── tutor-detail-modal/
+│       └── tutor-form-modal/
+├── shared/
+│   └── components/
+│       ├── header/
+│       ├── menu-superior/
+│       └── pagination/
+├── core/
+│   ├── guards/
 │   │   └── auth.guard.ts
-│   │
-│   ├── services
+│   ├── services/
 │   │   └── autenticacao.service.ts
-│   │
-│   └── auth-interceptor
+│   └── auth-interceptor/
 │       └── auth-interceptor.ts
-│
-├── interfaces
+├── interfaces/
 │   ├── pet.interfaces.ts
 │   └── tutor.interfaces.ts
-│
-└── services
+└── services/
     ├── pet.service.ts
     └── tutor.service.ts
+
 
 
 
