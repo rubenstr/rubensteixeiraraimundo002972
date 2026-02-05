@@ -123,10 +123,9 @@
             <h3 class="mb-3 text-sm font-semibold text-slate-700">
               Pets Disponíveis
             </h3>
-
-            @if (petsDisponiveis.length === 0) {
+            @if (petsDisponiveis.length > 0) {
             <div class="space-y-2">
-              {{petsDisponiveis | json}}
+             
               @for (pet of petsDisponiveis; track pet.id) {
                 <div class="flex items-center justify-between rounded-lg border px-3 py-2 text-sm">
                   <span>{{ pet.nome }}</span>

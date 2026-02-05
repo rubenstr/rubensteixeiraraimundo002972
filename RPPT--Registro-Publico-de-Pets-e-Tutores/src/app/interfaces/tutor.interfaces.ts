@@ -27,6 +27,7 @@ export interface IPetResumo {
   raca: string;
   idade: number;
   foto?: IFotoPet;
+  especie?: string;
 }
 
 export interface IFotoTutor {

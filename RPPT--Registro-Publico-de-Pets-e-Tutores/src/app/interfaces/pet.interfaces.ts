@@ -26,4 +26,5 @@ export interface IPet {
   nome: string;
   raca: string;
   idade: number;
+  especie?: string;
 }
