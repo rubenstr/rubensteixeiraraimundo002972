@@ -6,7 +6,7 @@
 
 # 🐾 RPPT — Registro Público de Pets e Tutores
 
-Sistema web para gerenciamento de **Tutores** e **Pets**, permitindo cadastro, edição, visualização e **vinculação/desvinculação de pets a tutores**, com arquitetura moderna baseada em **Angular 21 + tailwind**.
+Sistema web para gerenciamento de **Tutores** e **Pets**, permitindo cadastro, edição, visualização e criação de vinculo entre tutores e pets, com arquitetura moderna baseada em **Angular 21 + tailwind**.
 
 ---
 
@@ -90,7 +90,7 @@ git clone https://github.com/rubenstr/rubensteixeiraraimundo002972.git
 git checkout -b feature/desenvolvimento-funcionalidades
 
 # Acesse o diretório raiz - onde há o package.json
-cd diretorio raiz
+cd diretorio raiz - RPPT--Registro-Publico-de-Pets-e-Tutores
 
 # Instale as dependências
 npm install
