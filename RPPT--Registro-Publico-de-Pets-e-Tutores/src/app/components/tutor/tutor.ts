@@ -11,7 +11,7 @@ import { PetService } from '../../services/pet.service';
 
 @Component({
   selector: 'app-tutor',
-  imports: [TutorCard, Dashboard],
+  imports: [TutorCard],
   templateUrl: './tutor.html',
   styleUrl: './tutor.css',
 })
