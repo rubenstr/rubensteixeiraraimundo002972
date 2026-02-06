@@ -129,4 +129,14 @@ Para executar os testes unitarios:
 - npm run test
 
 
-🐳 Executando com Docker Compose
+Estrutura ideal de pastas
+RPPT--Registro-Publico-de-Pets-e-Tutores/
+├─ backend/                  # Seu backend Node/Express (API)
+│   ├─ server.js             # servidor Express
+│   └─ package.json
+├─ frontend/                 # Seu Angular
+│   ├─ src/
+│   ├─ angular.json
+│   └─ package.json
+├─ docker-compose.yml        # para orquestrar frontend + backend
+└─ Dockerfile                # build Angular + Nginx
