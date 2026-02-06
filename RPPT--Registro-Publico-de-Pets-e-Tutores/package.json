@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build RPPT--Registro-Publico-de-Pets-e-Tutores --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:RPPT--Registro-Publico-de-Pets-e-Tutores": "node dist/RPPT--Registro-Publico-de-Pets-e-Tutores/server/server.mjs"
