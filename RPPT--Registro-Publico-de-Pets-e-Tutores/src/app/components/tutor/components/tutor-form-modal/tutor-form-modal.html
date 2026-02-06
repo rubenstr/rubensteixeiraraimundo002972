@@ -31,6 +31,9 @@
           class="w-full mt-1 px-3 py-2 border rounded-md
                  focus:ring focus:ring-indigo-200"
         />
+        <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="text-red-500 text-sm">
+  Email inválido
+</div>
       </div>
 
       <div>
@@ -39,6 +42,7 @@
           type="text"
           formControlName="telefone"
           placeholder="(11) 91234-5678"
+          mask="(00) 00000-0000"
           class="w-full mt-1 px-3 py-2 border rounded-md
                  focus:ring focus:ring-indigo-200"
         />
@@ -59,6 +63,7 @@
         <input
           type="text"
           formControlName="cpf"
+          mask="000.000.000-00"
           class="w-full mt-1 px-3 py-2 border rounded-md
                  focus:ring focus:ring-indigo-200"
         />

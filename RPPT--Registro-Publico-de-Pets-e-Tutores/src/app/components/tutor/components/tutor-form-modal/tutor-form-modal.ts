@@ -10,11 +10,13 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TutorService } from '../../../../services/tutor.service';
+import { NgxMaskDirective, provideNgxMask, } from 'ngx-mask';
 
 @Component({
   selector: 'app-tutor-form-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgxMaskDirective],
+  providers: [provideNgxMask()],
   templateUrl: './tutor-form-modal.html',
 })
 export class TutorFormModal implements OnInit {
